@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseOrigin = supabaseUrl ? new URL(supabaseUrl).origin : "";
 const supabaseWebSocketOrigin = supabaseOrigin.replace(/^http/, "ws");
 const isDevelopment = process.env.NODE_ENV === "development";
@@ -21,6 +21,10 @@ const contentSecurityPolicy = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  env: {
+    SUPABASE_URL: process.env.SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY: process.env.SUPABASE_PUBLISHABLE_KEY,
+  },
   async headers() {
     return [
       { source: "/(.*)", headers: [

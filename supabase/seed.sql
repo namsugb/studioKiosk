@@ -1,0 +1,3 @@
+-- Create platform users through Supabase Auth first, then link them here:
+-- insert into public.platform_users(auth_user_id, role) values ('AUTH_USER_UUID', 'admin');
+-- Organizations, stores, PIN hashes and initial catalog releases are provisioned by /ops.

@@ -1,0 +1,27 @@
+.lock { min-height: 100dvh; display: grid; place-items: center; padding: 24px; background: var(--surface); }
+.lockCard { width: min(100%, 420px); padding: 32px; border-radius: 24px; background: var(--white); box-shadow: var(--shadow-dialog); }
+.lockIcon { width: 64px; height: 64px; margin-bottom: 24px; border-radius: 20px; display: grid; place-items: center; color: var(--brand); background: var(--brand-weak); }
+.pin { font-size: 28px; text-align: center; letter-spacing: .25em; font-variant-numeric: tabular-nums; }
+.navFooter { margin-top: auto; padding: 20px 12px 0; border-top: 1px solid var(--line); }
+.toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.statusTabs { display: flex; gap: 8px; flex-wrap: wrap; margin: 20px 0; }
+.statusTab { min-height: 38px; border: 1px solid var(--line); border-radius: 999px; padding: 0 14px; background: var(--white); color: var(--ink-secondary); cursor: pointer; }
+.statusTabActive { color: white; background: var(--ink); border-color: var(--ink); }
+.intakeList { display: grid; gap: 12px; }
+.intakeCard { display: grid; grid-template-columns: 92px 1.2fr 1fr auto; align-items: center; gap: 18px; padding: 18px 20px; cursor: pointer; }
+.intakeNumber { font-size: 19px; font-weight: 700; }
+.customer { font-weight: 700; }
+.phone { color: var(--ink-tertiary); font-size: 13px; margin-top: 4px; }
+.product { color: var(--ink-secondary); }
+.empty { padding: 64px 20px; text-align: center; color: var(--ink-tertiary); }
+.drawerBackdrop { position: fixed; inset: 0; z-index: 30; background: rgba(15, 34, 63, .44); display: flex; justify-content: flex-end; }
+.drawer { width: min(100%, 520px); height: 100%; overflow-y: auto; padding: 28px; background: var(--white); box-shadow: var(--shadow-dialog); }
+.drawerHead { display: flex; justify-content: space-between; gap: 20px; align-items: flex-start; }
+.detailGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 24px 0; }
+.detailCell { padding: 16px; background: var(--surface); border-radius: 14px; }
+.detailCell span { display: block; color: var(--ink-tertiary); font-size: 12px; margin-bottom: 6px; }
+.statusActions { display: grid; gap: 10px; margin-top: 24px; }
+.catalogGroup { margin-bottom: 24px; }
+.catalogRow { display: grid; grid-template-columns: 1fr 120px 120px 24px; align-items: center; gap: 14px; padding: 18px 20px; border-bottom: 1px solid var(--line); }
+.catalogRow:last-child { border-bottom: 0; }
+@media (max-width: 760px) { .intakeCard { grid-template-columns: 74px 1fr auto; } .product { display: none; } .drawer { padding: 22px 18px; } .catalogRow { grid-template-columns: 1fr auto; } .catalogRow > :nth-child(2) { display: none; } .detailGrid { grid-template-columns: 1fr; } }

@@ -1,0 +1,75 @@
+.content { width: min(100%, 760px); margin: 0 auto; padding: 44px 24px 20px; }
+.idle { min-height: 100dvh; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 44px 24px max(28px, env(safe-area-inset-bottom)); }
+.idleVisual { width: 180px; height: 180px; margin: auto auto 36px; border-radius: 50%; display: grid; place-items: center; background: var(--brand-weak); color: var(--brand); }
+.idleVisual svg { width: 78px; height: 78px; stroke-width: 1.5; }
+.idleMain { width: min(100%, 520px); margin: auto; }
+.idleButton { width: min(100%, 440px); margin-top: 34px; }
+.lead { margin: 10px 0 30px; color: var(--ink-secondary); font-size: 17px; line-height: 1.55; }
+.categoryGrid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+.categoryCard { min-height: 112px; padding: 20px; display: flex; align-items: center; gap: 16px; }
+.categoryIcon { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; flex: 0 0 auto; color: var(--ink-secondary); background: var(--surface); }
+.categoryIcon svg { width: 25px; height: 25px; }
+.categoryName { display: block; font-size: 18px; font-weight: 700; }
+.categoryDescription { display: block; margin-top: 5px; color: var(--ink-tertiary); font-size: 13px; }
+.visaCountryList { display: grid; gap: 12px; }
+.visaCountryCard { min-height: 104px; padding: 18px 20px; display: grid; grid-template-columns: 1fr auto; gap: 7px 18px; text-align: left; }
+.visaCountryName { font-size: 19px; font-weight: 700; }
+.visaCountrySize { color: var(--brand); font-size: 15px; white-space: nowrap; }
+.visaCountryNote { grid-column: 1 / -1; color: var(--ink-secondary); font-size: 14px; line-height: 1.5; }.tierList { display: grid; gap: 12px; }
+.tierCard { padding: 22px; display: grid; grid-template-columns: 1fr auto; gap: 6px 18px; }
+.tierName, .tierPrice { font-size: 19px; font-weight: 700; }
+.tierSubtitle { color: var(--brand); font-size: 14px; font-weight: 700; }
+.tierDescription { grid-column: 1 / -1; color: var(--ink-secondary); font-size: 14px; }
+.featureRow { grid-column: 1 / -1; display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.productCard { padding: 28px; }
+.beforeAfter { margin: 16px 0; padding: 22px; border: 1px solid var(--line); border-radius: 20px; background: white; }
+.beforeAfterHead { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+.beforeAfterHead h2 { margin: 0; font-size: 18px; }
+.beforeAfterHead p { margin: 5px 0 0; color: var(--ink-tertiary); font-size: 13px; }
+.beforeAfterHead > span { padding: 6px 9px; border-radius: 999px; color: var(--ink-tertiary); background: var(--surface); font-size: 12px; white-space: nowrap; }
+.beforeAfterGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.previewColumn { display: grid; gap: 8px; }
+.previewColumn > strong { color: var(--ink-tertiary); font-size: 12px; letter-spacing: .08em; }
+.previewColumnAfter > strong { color: var(--brand); }
+.previewPlaceholder { aspect-ratio: 4 / 5; display: grid; place-content: center; justify-items: center; gap: 10px; border: 1px dashed var(--line); border-radius: 14px; color: var(--ink-tertiary); background: var(--surface); font-size: 13px; }
+.previewColumnAfter .previewPlaceholder { border-color: color-mix(in srgb, var(--brand) 35%, var(--line)); background: var(--brand-weak); }
+.previewPlaceholder svg { width: 30px; height: 30px; stroke-width: 1.5; }
+.productHead { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
+.productName { margin: 0; font-size: 24px; line-height: 1.35; }
+.productPrice { font-size: 24px; font-weight: 700; white-space: nowrap; }
+.detailList { margin: 26px 0 0; padding: 22px 0 0; border-top: 1px solid var(--line); display: grid; gap: 14px; list-style: none; }
+.detailList li { display: flex; align-items: flex-start; gap: 10px; color: var(--ink-secondary); }
+.detailList svg { width: 18px; height: 18px; margin-top: 2px; color: var(--success); }
+.sectionTitle { margin: 28px 0 10px; font-size: 18px; }
+.optionRow { min-height: 74px; display: grid; grid-template-columns: 28px 1fr auto; align-items: center; gap: 12px; border-bottom: 1px solid var(--line); cursor: pointer; }
+.optionRow input { width: 22px; height: 22px; accent-color: var(--brand); }
+.optionName { display: block; font-weight: 700; }
+.optionDescription { display: block; margin-top: 4px; color: var(--ink-tertiary); font-size: 13px; }
+.optionPrice { font-weight: 700; font-variant-numeric: tabular-nums; }
+.reviewCard { min-height: 92px; padding: 18px 20px; display: grid; grid-template-columns: 28px 1fr auto; align-items: center; gap: 12px; cursor: pointer; }
+.reviewCard:has(input:checked) { border-color: var(--brand); background: var(--brand-weak); }
+.reviewCard input { width: 22px; height: 22px; accent-color: var(--brand); }
+.reviewBenefit { padding: 7px 10px; border-radius: 999px; color: var(--brand); background: white; font-size: 13px; font-weight: 700; white-space: nowrap; }
+.pickupList { display: grid; gap: 12px; }
+.pickupCard { min-height: 92px; padding: 18px 20px; display: grid; grid-template-columns: 24px 1fr auto; gap: 14px; align-items: center; cursor: pointer; }
+.pickupCard:has(input:checked) { border-color: var(--brand); background: var(--brand-weak); }
+.pickupCard input { width: 22px; height: 22px; accent-color: var(--brand); }
+.formGrid { display: grid; gap: 20px; }
+.consentCard { padding: 22px; display: flex; gap: 14px; align-items: flex-start; }
+.consentCard input { width: 22px; height: 22px; accent-color: var(--brand); flex: 0 0 auto; }
+.privacyList { margin: 18px 0 0; padding: 18px 0 0 20px; border-top: 1px solid var(--line); color: var(--ink-secondary); line-height: 1.7; }
+.summary { padding: 22px; background: var(--surface); border-radius: 20px; }
+.summaryRow { display: flex; justify-content: space-between; gap: 24px; padding: 10px 0; color: var(--ink-secondary); }
+.summaryRow strong { color: var(--ink); text-align: right; }
+.summaryTotal { margin-top: 8px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 20px; }
+.offline { margin-bottom: 18px; padding: 14px 16px; border-radius: 12px; color: #8c5b00; background: #fff3dc; }
+.complete { min-height: 100dvh; display: grid; place-items: center; text-align: center; padding: 36px 24px; }
+.completeIcon { width: 88px; height: 88px; margin: 0 auto 28px; border-radius: 50%; display: grid; place-items: center; color: white; background: var(--success); }
+.completeIcon svg { width: 46px; height: 46px; }
+.intakeNumber { margin: 24px 0; font-size: 44px; font-weight: 700; letter-spacing: -.03em; }
+.completeSummary { width: min(100%, 420px); margin: 0 auto; padding: 20px; background: var(--surface); border-radius: 16px; }
+@media (max-width: 600px) { .content { padding: 34px 18px 18px; } .categoryGrid { grid-template-columns: 1fr; } .productHead { display: grid; } .tierPrice { font-size: 17px; } }
+
+
+
+

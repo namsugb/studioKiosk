@@ -1,0 +1,62 @@
+import { expect, test } from "@playwright/test";
+
+test("customer can move from category to three retouch tiers without a next button", async ({ page }) => {
+  await page.goto("/kiosk");
+  await page.getByRole("button", { name: "촬영 접수하기" }).click();
+  await expect(page.getByRole("heading", { name: "어떤 사진을 촬영하시나요?" })).toBeVisible();
+  await page.getByRole("button", { name: /증명사진/ }).click();
+  await expect(page.getByRole("heading", { name: "어느 정도로 보정할까요?" })).toBeVisible();
+  await expect(page.getByRole("button", { name: /^기본 보정/ })).toBeVisible();
+  await expect(page.getByRole("button", { name: /^고급 보정/ })).toBeVisible();
+  await expect(page.getByRole("button", { name: /^프리미엄 보정/ })).toBeVisible();
+  await page.getByRole("button", { name: /^기본 보정/ }).click();
+  await expect(page.getByRole("region", { name: "증명사진 보정 전후 예시" })).toBeVisible();
+  await expect(page.locator('article + section[aria-label="증명사진 보정 전후 예시"]')).toBeVisible();
+  await expect(page.getByLabel("보정 전 사진 자리")).toBeVisible();
+  await expect(page.getByLabel("보정 후 사진 자리")).toBeVisible();
+  await expect(page.getByText("예상 소요시간 약 15~20분", { exact: true })).toBeVisible();
+});
+test("job advanced shows its configured contents without a paid extra file option", async ({ page }) => {
+  await page.goto("/kiosk");
+  await page.getByRole("button", { name: "촬영 접수하기" }).click();
+  await page.getByRole("button", { name: /취업사진/ }).click();
+  await page.getByRole("button", { name: /^고급 보정/ }).click();
+  await expect(page.getByText("3 x 4 8매", { exact: true })).toBeVisible();
+  await expect(page.getByText("수정본 파일 포함", { exact: true })).toBeVisible();
+  await expect(page.getByText("예상 소요시간 약 1시간", { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "이 상품 선택" }).click();
+  await expect(page.getByRole("checkbox", { name: /추가 파일/ })).toHaveCount(0);
+});
+test("visa customers choose a country before a product", async ({ page }) => {
+  await page.goto("/kiosk");
+  await page.getByRole("button", { name: "촬영 접수하기" }).click();
+  await page.getByRole("button", { name: /비자·해외서류/ }).click();
+  await expect(page.getByRole("heading", { name: "어느 나라 비자사진이 필요한가요?" })).toBeVisible();
+  await expect(page.getByRole("button", { name: /미국.*51 × 51 mm.*안경 착용 불가/ })).toBeVisible();
+  await expect(page.getByRole("button", { name: /일본.*45 × 35 mm.*정면 무표정/ })).toBeVisible();
+  await expect(page.getByRole("button", { name: /중국.*33 × 48 mm.*양쪽 귀 노출 권장/ })).toBeVisible();
+  await expect(page.getByRole("button", { name: /EU.*35 × 45 mm.*국가별 미세 차이/ })).toBeVisible();
+  await expect(page.getByRole("button", { name: /캐나다.*50 × 70 mm/ })).toBeVisible();
+  await page.getByRole("button", { name: /미국.*51 × 51 mm/ }).click();
+  await expect(page.getByRole("heading", { name: "어느 정도로 보정할까요?" })).toBeVisible();
+  await expect(page.getByRole("button", { name: /^기본 보정/ })).toBeVisible();
+  await expect(page.getByRole("button", { name: /^고급 보정/ })).toBeVisible();
+  await expect(page.getByRole("button", { name: /^프리미엄 보정/ })).toHaveCount(0);
+  await page.getByRole("button", { name: "이전" }).click();
+  await expect(page.getByRole("heading", { name: "어느 나라 비자사진이 필요한가요?" })).toBeVisible();
+});
+test("profile packages show their own contents and extra file price", async ({ page }) => {
+  await page.goto("/kiosk");
+  await page.getByRole("button", { name: "촬영 접수하기" }).click();
+  await page.getByRole("button", { name: /프로필사진/ }).click();
+  await expect(page.getByRole("button", { name: /프리미엄 보정.*헤어·의상 교체 없음/ })).toBeVisible();
+  await page.getByRole("button", { name: /^기본 보정/ }).click();
+  await expect(page.getByText("출력 규격 4 x 6", { exact: true })).toBeVisible();
+  await expect(page.getByText("의상 1벌", { exact: true })).toBeVisible();
+  await expect(page.getByText("파일 1개 제공", { exact: true })).toBeVisible();
+  await expect(page.getByText("예상 소요시간 1시간", { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "이 상품 선택" }).click();
+  const extraFile = page.getByRole("checkbox", { name: /추가 파일/ });
+  await expect(extraFile).toBeVisible();
+  await expect(extraFile.locator("xpath=..")).toContainText("30,000원");
+});

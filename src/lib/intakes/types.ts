@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const intakeStatusSchema = z.enum(["pending_review", "waiting_shoot", "shooting", "payment_waiting", "completed", "cancelled"]);
+export const intakeStatusSchema = z.enum(["pending_review", "completed"]);
 export type IntakeStatus = z.infer<typeof intakeStatusSchema>;
 
 export const intakeSubmissionSchema = z.object({
@@ -17,11 +17,5 @@ export type IntakeRecord = Omit<IntakeSubmission, "sampleConsent"> & { sampleCon
 };
 
 export const statusLabels: Record<IntakeStatus, string> = {
-  pending_review: "직원 확인 대기", waiting_shoot: "촬영 대기", shooting: "촬영 중", payment_waiting: "결제 대기", completed: "결제 완료", cancelled: "접수 취소"
+  pending_review: "접수 대기", completed: "접수 완료"
 };
-
-export const statusNext: Partial<Record<IntakeStatus, IntakeStatus>> = {
-  pending_review: "waiting_shoot", waiting_shoot: "shooting", shooting: "payment_waiting", payment_waiting: "completed"
-};
-
-

@@ -21,8 +21,7 @@ export async function POST(request: Request) {
   if (!parsed.success) return NextResponse.json({ error: "기기 정보를 확인해 주세요." }, { status: 400 });
 
   if (isDemoMode) {
-    const configured = process.env.DEMO_DEVICE_LICENSE;
-    if (!configured) return NextResponse.json({ error: "DEMO_DEVICE_LICENSE를 설정해 주세요." }, { status: 503 });
+    const configured = (process.env.DEMO_DEVICE_LICENSE?.trim() || "DEMODEVICE01");
     return NextResponse.json({ id: "demo-license", licenseKey: formatLicense(configured) }, { status: 201 });
   }
 

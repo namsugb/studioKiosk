@@ -12,8 +12,8 @@ export async function POST(request: Request) {
   if (!parsed.success) return NextResponse.json({ error: "기기 라이선스를 확인해 주세요." }, { status: 400 });
 
   if (isDemoMode) {
-    const expected = process.env.DEMO_DEVICE_LICENSE;
-    if (!expected || parsed.data.licenseKey !== normalizeLicense(expected)) return NextResponse.json({ error: "개발용 기기 라이선스를 확인해 주세요." }, { status: 401 });
+    const expected = (process.env.DEMO_DEVICE_LICENSE?.trim() || "DEMODEVICE01");
+    if (parsed.data.licenseKey !== normalizeLicense(expected)) return NextResponse.json({ error: "개발용 기기 라이선스를 확인해 주세요." }, { status: 401 });
     return NextResponse.json({ deviceId: "demo-device", storeId: "demo-store", canManageCatalog: process.env.DEMO_CAN_MANAGE_CATALOG === "true" });
   }
 

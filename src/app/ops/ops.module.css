@@ -1,10 +1,18 @@
-.orgGrid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
-.orgCard { padding: 22px; }
-.orgIcon { width: 48px; height: 48px; border-radius: 16px; display: grid; place-items: center; color: var(--brand); background: var(--brand-weak); margin-bottom: 18px; }
-.orgMeta { display: flex; gap: 16px; margin-top: 18px; color: var(--ink-secondary); font-size: 14px; }
+.customerList { display: grid; gap: 16px; }
+.customerCard { padding: 22px; }
+.customerHeader { display: flex; justify-content: space-between; gap: 18px; align-items: flex-start; }
+.customerTitle { display: flex; gap: 10px; align-items: center; color: var(--brand); }
+.customerTitle h2 { margin: 0; color: var(--ink); font-size: 20px; }
+.customerHeader p, .studioCard p { margin: 6px 0 0; }
+.studioGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+.studioCard { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: center; padding: 16px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+.studioCard .btn { grid-column: 1 / -1; }
+.studioIcon { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 12px; color: var(--brand); background: var(--brand-weak); }
+.emptyStudio { min-height: 130px; display: flex; align-items: center; justify-content: center; gap: 8px; border: 1px dashed var(--line-strong); border-radius: 16px; color: var(--ink-secondary); background: transparent; cursor: pointer; }
 .modalBackdrop { position: fixed; inset: 0; z-index: 30; display: grid; place-items: center; padding: 20px; background: rgba(15,34,63,.46); }
 .modal { width: min(100%, 520px); padding: 28px; border-radius: 24px; background: var(--white); box-shadow: var(--shadow-dialog); }
 .formGrid { display: grid; gap: 18px; margin: 24px 0; }
-.deviceTable { margin-top: 26px; }
-@media (max-width: 900px) { .orgGrid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 560px) { .orgGrid { grid-template-columns: 1fr; } }
+.licenseBox { padding: 22px; border-radius: 16px; background: var(--surface); text-align: center; }
+.licenseBox div { margin-top: 10px; font-size: 30px; font-weight: 700; letter-spacing: .12em; }
+@media (max-width: 900px) { .studioGrid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { .customerHeader { align-items: stretch; flex-direction: column; } .studioGrid { grid-template-columns: 1fr; } }

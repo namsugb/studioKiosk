@@ -45,6 +45,8 @@
 .optionRow input { width: 22px; height: 22px; accent-color: var(--brand); }
 .optionName { display: block; font-weight: 700; }
 .optionDescription { display: block; margin-top: 4px; color: var(--ink-tertiary); font-size: 13px; }
+.optionRowIncluded { cursor: default; }
+.includedNote { display: block; margin-top: 5px; color: var(--brand); font-size: 13px; font-weight: 700; }
 .optionPrice { font-weight: 700; font-variant-numeric: tabular-nums; }
 .reviewCard { min-height: 92px; padding: 18px 20px; display: grid; grid-template-columns: 28px 1fr auto; align-items: center; gap: 12px; cursor: pointer; }
 .reviewCard:has(input:checked) { border-color: var(--brand); background: var(--brand-weak); }

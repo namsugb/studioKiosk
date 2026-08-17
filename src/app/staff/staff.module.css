@@ -1,9 +1,12 @@
 .lock { min-height: 100dvh; display: grid; place-items: center; padding: 24px; background: var(--surface); }
-.lockCard { width: min(100%, 420px); padding: 32px; border-radius: 24px; background: var(--white); box-shadow: var(--shadow-dialog); }
+.lockStack { width: min(100%, 420px); display: grid; justify-items: center; gap: 18px; }
+.lockCard { width: 100%; padding: 32px; border-radius: 24px; background: var(--white); box-shadow: var(--shadow-dialog); }
+.backLink { min-width: 220px; display: grid; place-items: center; text-align: center; }
 .lockIcon { width: 64px; height: 64px; margin-bottom: 24px; border-radius: 20px; display: grid; place-items: center; color: var(--brand); background: var(--brand-weak); }
 .pin { font-size: 28px; text-align: center; letter-spacing: .25em; font-variant-numeric: tabular-nums; }
 .navFooter { margin-top: auto; padding: 20px 12px 0; border-top: 1px solid var(--line); }
 .toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.mobileLock { display: none; }
 .statusTabs { display: flex; gap: 8px; flex-wrap: wrap; margin: 20px 0; }
 .statusTab { min-height: 38px; border: 1px solid var(--line); border-radius: 999px; padding: 0 14px; background: var(--white); color: var(--ink-secondary); cursor: pointer; }
 .statusTabActive { color: white; background: var(--ink); border-color: var(--ink); }
@@ -24,4 +27,5 @@
 .catalogGroup { margin-bottom: 24px; }
 .catalogRow { display: grid; grid-template-columns: 1fr 120px 120px 24px; align-items: center; gap: 14px; padding: 18px 20px; border-bottom: 1px solid var(--line); }
 .catalogRow:last-child { border-bottom: 0; }
+@media (max-width: 820px) { .mobileLock { display: inline-flex; } }
 @media (max-width: 760px) { .intakeCard { grid-template-columns: 74px 1fr auto; } .product { display: none; } .drawer { padding: 22px 18px; } .catalogRow { grid-template-columns: 1fr auto; } .catalogRow > :nth-child(2) { display: none; } .detailGrid { grid-template-columns: 1fr; } }

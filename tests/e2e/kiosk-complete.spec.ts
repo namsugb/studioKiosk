@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 test("customer can complete an intake with review participation", async ({ page }) => {
   await page.goto("/kiosk");
   await page.getByRole("button", { name: "촬영 접수하기" }).click();
-  await page.getByRole("button", { name: /증명사진/ }).click();
+  await page.getByRole("button", { name: /학생증 자격증 이력서/ }).click();
   await page.getByRole("button", { name: /^기본 보정/ }).click();
   await page.getByRole("button", { name: "이 상품 선택" }).click();
   await page.getByRole("checkbox", { name: /리뷰에 참여할게요/ }).check();

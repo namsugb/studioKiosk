@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { intakeSubmissionSchema } from "./types";
 
 const valid = {
-  clientSubmissionId: "50f48a17-0bc5-453d-8a73-07cc2614077e", catalogReleaseId: "release-v1", categoryId: "id", tierId: "basic", productId: "id-basic", addonIds: [], discountIds: [], reviewParticipation: true, visaCountryId: null, pickupId: "fast",
+  clientSubmissionId: "50f48a17-0bc5-453d-8a73-07cc2614077e", catalogReleaseId: "release-v1", categoryId: "id", tierId: "basic", productId: "id-basic", addonIds: [], discountIds: [], reviewParticipation: true, sampleConsent: false, visaCountryId: null, pickupId: "fast",
   customer: { name: "홍길동", phone: "01012345678", request: "" }, privacyConsent: true, expectedTotal: 30000, selectionSnapshot: { productName: "증명사진 기본 보정" }
 };
 

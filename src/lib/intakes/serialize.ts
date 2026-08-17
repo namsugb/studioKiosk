@@ -38,6 +38,7 @@ export function serializeDatabaseIntake(value: unknown): IntakeRecord {
     discountIds: lines.filter((line) => line.line_type === "discount").map((line) => text(line.reference_id)),
     discountApprovedIds: lines.filter((line) => line.line_type === "discount" && line.staff_approved === true).map((line) => text(line.reference_id)),
     reviewParticipation: snapshot.reviewParticipation === true,
+    sampleConsent: snapshot.sampleConsent === true,
     visaCountryId: text(snapshot.visaCountryId) || null,
     pickupId: text(row.pickup_id),
     customer: {

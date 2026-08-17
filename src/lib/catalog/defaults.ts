@@ -1,28 +1,31 @@
 import type { Catalog } from "./schema";
 
-const standardAddons = ["extra-file", "extra-print"];
+const printAddonIds = ["extra-print-3x4", "extra-print-35x45", "extra-print-visa", "extra-print-card"];
+const standardAddons = ["extra-file", ...printAddonIds];
 const pickups = ["fast", "same-day", "consult"];
 
 const categorySeed = [
-  ["id", "증명사진", "학생증·민증·자격증", "id-card", 30000, 45000, 60000],
-  ["passport", "여권·운전면허", "여권·면허 제출 규격", "scan-face", 30000, 45000, 60000],
-  ["job", "취업사진", "이력서·공무원·직종별", "briefcase-business", null, 55000, 77000],
-  ["visa", "비자·해외서류", "국가별 규격은 직원 확인", "plane", 45000, 60000, null],
-  ["profile", "프로필사진", "회사·명함·SNS", "user-round", 70000, 150000, 250000]
+  ["id", "학생증 자격증 이력서", "3 × 4 cm", "id-card", 30000, 45000, 60000],
+  ["resident", "민증", "3.5 × 4.5 cm", "id-card", 30000, 45000, 60000],
+  ["passport", "운전면허, 여권, 수능", "3.5 × 4.5 cm", "scan-face", 30000, 45000, 60000],
+  ["job", "취업", "3 × 4 cm · 3.5 × 4.5 cm · 2종 제공", "briefcase-business", null, 55000, 77000],
+  ["visa", "비자", "국가별 규격", "plane", 45000, 60000, null],
+  ["profile", "프로필", "4 × 6 inch", "user-round", 70000, 150000, 250000]
 ] as const;
 
 function buildProducts(): Catalog["products"] {
   return categorySeed.flatMap(([categoryId, categoryName, , , basic, advanced, premium]) => {
     const products: Catalog["products"] = [];
-    const usesIdPhotoDetails = categoryId === "id" || categoryId === "passport";
+    const usesIdPhotoDetails = categoryId === "id" || categoryId === "resident" || categoryId === "passport";
     const isJob = categoryId === "job";
     const isProfile = categoryId === "profile";
-    const categoryDetails = usesIdPhotoDetails ? ["출력 6매", "규격 3.5 x 4.5 or 3 x 4"] : [];
+    const categoryDetails = categoryId === "id" ? ["출력 6매", "규격 3 × 4 cm"] : categoryId === "resident" || categoryId === "passport" ? ["출력 6매", "규격 3.5 × 4.5 cm"] : [];
     const profileAddonPriceOverrides = isProfile ? { "extra-file": 30000 } : undefined;
+    const basicDeliveryDetail = "출력물 제공";
 
     if (basic !== null) products.push({
       id: `${categoryId}-basic`, categoryId, tierId: "basic", name: `${categoryName} 기본 보정`, tag: isProfile ? "의상 1벌 · 파일 1개 제공" : "자연스러운 기본 보정 상품", price: { amount: basic },
-      details: isProfile ? ["출력 규격 4 x 6", "의상 1벌", "파일 1개 제공"] : [...categoryDetails, "다양한 표정과 각도로 촬영", "피부톤·잡티·다크서클 자연 보정", "제출용 파일과 출력물 제공"],
+      details: isProfile ? ["출력 규격 4 x 6", "의상 1벌", "파일 1개 제공"] : [...categoryDetails, "다양한 표정과 각도로 촬영", "피부톤·잡티·다크서클 자연 보정", basicDeliveryDetail],
       durationMinutes: usesIdPhotoDetails || isProfile ? null : 30,
       durationLabel: usesIdPhotoDetails ? "약 15~20분" : isProfile ? "1시간" : undefined,
       addonPriceOverrides: profileAddonPriceOverrides,
@@ -34,36 +37,36 @@ function buildProducts(): Catalog["products"] {
 
     products.push({
       id: `${categoryId}-advanced`, categoryId, tierId: "advanced", name: `${categoryName} 고급 보정`, tag: isProfile ? "의상 2벌 · 파일 2개 제공" : "디지털 메이크업과 1:1 수정 확인", price: { amount: advanced },
-      details: isProfile ? ["출력 규격 4 x 6", "의상 2벌", "파일 2개 제공"] : isJob ? ["3 x 4 8매", "수정본 파일 포함"] : [...categoryDetails, "촬영 전 이미지 상담", "디지털 메이크업과 비대칭 세부 조정", "고객과 1:1 수정 확인"],
+      details: isProfile ? ["출력 규격 4 x 6", "의상 2벌", "파일 2개 제공"] : isJob ? ["3 × 4 8매", "3.5 × 4.5 6매", "수정본 파일 제공 (3 × 4)"] : [...categoryDetails, "촬영 전 이미지 상담", "디지털 메이크업과 비대칭 세부 조정", "고객과 1:1 수정 확인"],
       durationMinutes: usesIdPhotoDetails || isJob || isProfile ? null : 60,
-      durationLabel: usesIdPhotoDetails ? "약 15~20분" : isJob ? "약 1시간" : isProfile ? "2시간" : undefined,
+      durationLabel: usesIdPhotoDetails ? "약 15~20분" : isJob ? "1시간" : isProfile ? "2시간" : undefined,
       addonPriceOverrides: profileAddonPriceOverrides,
       tierSubtitle: isProfile ? "의상 2벌 · 파일 2개" : undefined,
       tierDescription: isProfile ? "두 가지 의상으로 촬영하고 파일 2개를 제공해요." : undefined,
       tierFeatures: isProfile ? ["의상 2벌", "파일 2개 제공", "소요시간 2시간"] : undefined,
-      allowedAddonIds: isJob ? ["extra-print"] : standardAddons,
+      allowedAddonIds: isJob ? printAddonIds : standardAddons,
       includedAddonIds: isJob ? ["extra-file"] : [],
       allowedPickupIds: ["same-day", "consult"], active: true,
     });
 
     if (premium !== null) products.push({
       id: `${categoryId}-premium`, categoryId, tierId: "premium", name: `${categoryName} 프리미엄 보정`, tag: isProfile ? "의상 2벌 · 다른 포즈 파일 4개" : "헤어·의상 교체 프리미엄 상품", price: { amount: premium },
-      details: isProfile ? ["헤어·의상 교체 없음", "의상 2벌 촬영", "다른 포즈 파일 4개 제공", "출력물 4 x 6 2매"] : isJob ? ["3 x 4 8매", "3.5 x 4.5 6매", "수정본 파일 포함"] : [...categoryDetails, "고급 보정 전체 포함", "헤어스타일 변경", "의상 교체", "촬영 목적에 맞춘 정밀 보정"],
+      details: isProfile ? ["헤어·의상 교체 없음", "의상 2벌 촬영", "다른 포즈 파일 4개 제공", "출력물 4 x 6 2매"] : isJob ? ["헤어·의상 교체 포함", "3 × 4 8매", "3.5 × 4.5 6매", "수정본 파일 2종 포함 (3 × 4, 3.5 × 4.5)"] : [...categoryDetails, ...(usesIdPhotoDetails ? ["수정본 파일 제공"] : []), "고급 보정 전체 포함", "헤어스타일 & 의상 교체", "촬영 목적에 맞춘 정밀 보정"],
       durationMinutes: null,
       durationLabel: isJob ? "최소 2시간 · 정확한 시간은 직원과 상담해요." : undefined,
       addonPriceOverrides: profileAddonPriceOverrides,
-      tierSubtitle: isProfile ? "헤어·의상 교체 없음" : undefined,
+      tierSubtitle: isProfile ? "의상 2벌 · 파일 4개" : undefined,
       tierDescription: isProfile ? "의상 2벌로 촬영하고 서로 다른 포즈의 파일 4개를 제공해요." : undefined,
       tierFeatures: isProfile ? ["의상 2벌 촬영", "파일 4개 제공", "4 x 6 출력물 2매"] : undefined,
-      allowedAddonIds: isJob ? ["extra-print"] : standardAddons,
-      includedAddonIds: isJob ? ["costume-hair", "extra-file"] : isProfile ? [] : ["costume-hair"],
+      allowedAddonIds: isJob ? printAddonIds : standardAddons,
+      includedAddonIds: isJob ? ["costume-hair", "extra-file"] : usesIdPhotoDetails ? ["costume-hair", "extra-file"] : isProfile ? [] : ["costume-hair"],
       allowedPickupIds: ["consult"], active: true,
     });
 
     if (isJob) products.push({
       id: "job-cabin-crew", categoryId, tierId: "cabin-crew", name: "취업사진 승무원", tag: "승무원 지원용 촬영 상품", price: { amount: 99000 },
-      details: ["올림머리 헤어스타일링", "치아 보이는 웃는 모습", "3 x 4 8매", "3.5 x 4.5 6매", "수정본 파일 포함"],
-      durationMinutes: null, allowedAddonIds: ["extra-print"], includedAddonIds: ["extra-file"], allowedPickupIds: ["consult"], active: true,
+      details: ["헤어·의상 교체 포함", "올림머리 헤어스타일링", "치아 보이는 웃는 모습", "3 × 4 8매", "3.5 × 4.5 6매", "수정본 파일 2종 포함 (3 × 4, 3.5 × 4.5)"],
+      durationMinutes: null, allowedAddonIds: printAddonIds, includedAddonIds: ["costume-hair", "extra-file"], allowedPickupIds: ["consult"], active: true,
     });
 
     return products;
@@ -90,8 +93,11 @@ export const defaultCatalog: Catalog = {
   ],
   products: buildProducts(),
   addons: [
-    { id: "extra-file", name: "추가 파일", description: "제출용 파일을 추가해요.", price: 5000, conflictGroup: null, excludes: [], active: true },
-    { id: "extra-print", name: "인화 추가", description: "기본 구성 외에 인화물을 추가해요.", price: 15000, conflictGroup: null, excludes: [], active: true },
+    { id: "extra-file", name: "파일 추가", description: "제출용 파일을 추가해요.", price: 5000, conflictGroup: null, excludes: [], active: true },
+    { id: "extra-print-3x4", name: "3 × 4 인화 추가", description: "3 × 4 규격으로 8매를 추가해요.", price: 15000, conflictGroup: null, excludes: [], active: true },
+    { id: "extra-print-35x45", name: "3.5 × 4.5 인화 추가", description: "3.5 × 4.5 규격으로 6매를 추가해요.", price: 15000, conflictGroup: null, excludes: [], active: true },
+    { id: "extra-print-visa", name: "비자사진 인화 추가", description: "비자사진 규격으로 4매를 추가해요.", price: 15000, conflictGroup: null, excludes: [], active: true },
+    { id: "extra-print-card", name: "명함사진 인화 추가", description: "명함사진 규격으로 2매를 추가해요.", price: 15000, conflictGroup: null, excludes: [], active: true },
     { id: "costume", name: "의상 합성", description: "목적에 맞는 의상으로 변경해요.", price: 15000, conflictGroup: "appearance", excludes: ["costume-hair"], active: true },
     { id: "hair", name: "헤어 합성", description: "헤어스타일을 자연스럽게 변경해요.", price: 25000, conflictGroup: "appearance", excludes: ["costume-hair"], active: true },
     { id: "costume-hair", name: "의상+헤어 합성", description: "의상과 헤어를 함께 변경해요.", price: 30000, conflictGroup: "appearance-combined", excludes: ["costume", "hair"], active: true }

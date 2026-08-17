@@ -5,21 +5,21 @@
 ## 화면
 
 - `/kiosk` — 고객 현장 접수
-- `/staff` — 등록된 직원 기기의 접수·상품 관리
+- `/staff` — 등록 기기의 PIN 보호 접수·상품 관리
 - `/ops` — 공급자 사진관·지점·기기 관리
-- `/activate` — 일회용 코드로 기기 연결
+- `/activate` — 기기별 1회용 라이선스로 매장 등록
 
 ## 로컬 실행
 
 1. `.env.example`을 `.env.local`로 복사합니다.
-2. 개발 데모를 사용할 경우 `NEXT_PUBLIC_DEMO_MODE=true`, `DEMO_STAFF_PIN`, `DEMO_ACTIVATION_CODE`를 직접 설정합니다.
+2. 개발 데모를 사용할 경우 `NEXT_PUBLIC_DEMO_MODE=true`, `DEMO_STAFF_PIN`, `DEMO_DEVICE_LICENSE`를 직접 설정합니다.
 3. `pnpm install` 후 `pnpm dev`를 실행합니다.
 
 운영 배포에서는 데모 모드가 강제로 비활성화되며 Supabase URL, publishable key, secret key와 32자 이상의 `STAFF_SESSION_SECRET`이 모두 필요합니다. Secret key는 서버 전용이며 브라우저에 노출하면 안 됩니다.
 
 ## Supabase
 
-`supabase/migrations/202608140001_initial.sql`에 멀티테넌트 테이블, RLS, 접수 RPC, 상태 전이, Realtime publication과 7일 개인정보 익명화 작업이 포함되어 있습니다.
+`supabase/migrations`에 멀티테넌트 테이블, 통합 기기 라이선스, RLS, 접수 RPC, 상태 전이, Realtime publication과 7일 개인정보 익명화 작업이 포함되어 있습니다.
 
 ```bash
 supabase start
